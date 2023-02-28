@@ -1,0 +1,42 @@
+{
+  "name": "assignment-wt1-oauth",
+  "version": "1.0.0",
+  "description": "1DV027 - WT1 - OAuth",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --inspect -r dotenv/config src/server.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv027/student/eh224kr/assignment-wt1-oauth.git"
+  },
+  "keywords": [],
+  "author": "Ellinor Henriksson <eh224kr@student.lnu.se>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "helmet": "^6.0.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.3.0"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.7",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.25.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.14",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^2.0.20"
+  },
+  "eslintConfig": {
+    "extends": "@lnu"
+  }
+}
