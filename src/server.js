@@ -6,9 +6,12 @@ import logger from 'morgan'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 import { router } from './routes/router.js'
+import { container } from './config/bootstrap.js'
 
 try {
   const app = express()
+
+  app.set('container', container)
 
   // Get full name of current directory.
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
