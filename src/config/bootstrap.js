@@ -3,18 +3,18 @@
  */
 
 import { IoCContainer } from '../util/IoCContainer.js'
-import { Service } from '../services/Service.js'
 import { Controller } from '../controllers/Controller.js'
+import { GitLabService } from '../services/GitLabService.js'
 
 const iocContainer = new IoCContainer()
 
-iocContainer.register('ServiceSingleton', Service, {
+iocContainer.register('GitLabServiceSingleton', GitLabService, {
   singleton: true
 })
 
 iocContainer.register('Controller', Controller, {
   dependencies: [
-    'ServiceSingleton'
+    'GitLabServiceSingleton'
   ]
 })
 

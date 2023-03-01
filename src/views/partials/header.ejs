@@ -1,0 +1,29 @@
+<nav>
+  <div>
+    <ul>
+      <li>
+        <a href=".">GitLab Viewer</a>
+      </li>
+      <% if (typeof user === 'undefined') { %>
+        <li>
+          <a href="./login">Log in</a>
+        </li>
+      <% } else { %>
+        <li>
+          <a href="./profile">Profile</a>
+        </li>
+        <li>
+          <a href="./activities">Activities</a>
+        </li>
+        <li>
+          <a href="./groups">Groups</a>
+        </li>
+        <li>
+          <div>
+            <a href="./logout">Log out</a>
+          </div>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+</nav>

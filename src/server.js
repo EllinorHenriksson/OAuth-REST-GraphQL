@@ -61,11 +61,6 @@ try {
   app.use((req, res, next) => {
     res.locals.baseURL = baseURL
 
-    if (req.session.flash) {
-      res.locals.flash = req.session.flash
-      delete req.session.flash
-    }
-
     if (req.session.user) {
       res.locals.user = req.session.user
     }
