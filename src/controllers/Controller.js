@@ -1,5 +1,7 @@
 import { GitLabService } from '../services/GitLabService.js'
 import { ServiceBase } from '../services/ServiceBase.js'
+import { randomstring } from 'randomstring'
+import fetch from 'node-fetch'
 
 export class Controller {
   /**
@@ -16,6 +18,9 @@ export class Controller {
   }
 
   login (req, res) {
+    const state = randomstring.generate()
+    req.session.state = state
+    res.redirect(`https://gitlab.example.com/oauth/authorize?client_id=${process.env.APP_ID}&redirect_uri=${process.env.CALLBACK}&response_type=code&state=${state}&scope=read_api+openid`)
     // Log in with OAuth
     // Regenerate session
     // Add user to req.session.user
@@ -36,8 +41,25 @@ export class Controller {
     res.render('groups')
   }
 
-  logout () {
+  logout (req, res) {
     // Log out with OAuth
     // Destroy session
+  }
+
+  async oauthCallback (req, res) {
+    // Redirect url for oauth
+    if (req.query.state === req.session.state) {
+      // Proceed
+      const code = req.query.code
+      // Request access token
+      // OBS! Fortsättt här
+      const response = await fetch('')
+
+      // Check if response OK
+
+      const data = await response.json()
+    } else {
+      // Error
+    }
   }
 }

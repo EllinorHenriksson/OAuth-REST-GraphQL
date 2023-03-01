@@ -19,4 +19,6 @@ router.get('/activities', (req, res, next) => resolveController(req).activities(
 router.get('/groups', (req, res, next) => resolveController(req).groups(req, res, next))
 router.get('/logout', (req, res, next) => resolveController(req).logout(req, res, next))
 
+router.get('/oauth/callback', (req, res, next) => resolveController(req).oauthCallback(req, res, next))
+
 router.use('*', (req, res, next) => next(createError(404)))
