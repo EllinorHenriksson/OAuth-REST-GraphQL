@@ -29,4 +29,17 @@ export class GitLabService extends ServiceBase {
       }
     }
   }
+
+  /**
+   * Revokes the access token for the GitLab user.
+   *
+   * @param {string} accessToken - The access token.
+   */
+  async revokeAccessToken (accessToken) {
+    const response = await fetch(`https://gitlab.lnu.se/oauth/revoke?client_id=${process.env.APP_ID}&client_secret=${process.env.APP_SECRET}&token=${accessToken}`, { method: 'POST' })
+
+    if (response.status !== 200) {
+      throw createError(500, `Fetch error: ${response.status} ${response.statusText}`)
+    }
+  }
 }

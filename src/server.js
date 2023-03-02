@@ -73,6 +73,12 @@ try {
 
   // Error handler.
   app.use(function (err, req, res, next) {
+    if (err.status === 401) {
+      return res
+        .status(401)
+        .sendFile(join(directoryFullName, 'views', 'errors', '401.html'))
+    }
+
     if (err.status === 403) {
       return res
         .status(403)

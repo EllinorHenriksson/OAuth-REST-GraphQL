@@ -1,25 +1,43 @@
 import { GitLabService } from '../services/GitLabService.js'
 import { ServiceBase } from '../services/ServiceBase.js'
 import randomstring from 'randomstring'
-import fetch from 'node-fetch'
 import createError from 'http-errors'
-import jwt from 'jsonwebtoken'
 
+/**
+ * Represents a controller.
+ */
 export class Controller {
   /**
    * @type {ServiceBase}
    */
   #service
 
+  /**
+   * Initializing constructor.
+   *
+   * @param {ServiceBase} service - A concrete subclass to ServiceBase.
+   */
   constructor (service = new GitLabService()) {
     this.#service = service
   }
 
-  index (req, res, next) {
+  /**
+   * Renders the start page.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   */
+  index (req, res) {
     res.render('index')
   }
 
-  login (req, res, next) {
+  /**
+   * Logs in the user.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   */
+  login (req, res) {
     const state = randomstring.generate()
     req.session.state = state
     res.redirect(307, `https://gitlab.lnu.se/oauth/authorize?client_id=${process.env.APP_ID}&redirect_uri=${process.env.CALLBACK}&response_type=code&state=${state}&scope=read_api+openid+profile+email`)
@@ -40,12 +58,40 @@ export class Controller {
     res.render('groups')
   }
 
-  logout (req, res, next) {
-    // Log out with OAuth
-    // Destroy session
+  /**
+   * Logs out the user.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   */
+  async logout (req, res, next) {
+    if (req.session.accessToken) {
+      try {
+        await this.#service.revokeAccessToken(req.session.accessToken)
+      } catch (error) {
+        next(error)
+      }
+
+      req.session.destroy(error => {
+        if (error) {
+          next(error)
+        }
+      })
+
+      res.redirect('/')
+    }
+
+    next(createError(401))
   }
 
-  // Redirect url for oauth
+  /**
+   * Redirect URL for GitLab's OAuth; requests access token and regenerates session.
+   *
+   * @param {object} req - Express request object.
+   * @param {object} res - Express response object.
+   * @param {Function} next - Express next middleware function.
+   */
   async oauthCallback (req, res, next) {
     if (req.query.state === req.session.state) {
       try {
@@ -66,6 +112,6 @@ export class Controller {
       }
     }
 
-    next(createError(400))
+    next(createError(401))
   }
 }
