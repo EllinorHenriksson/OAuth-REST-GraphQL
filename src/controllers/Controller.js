@@ -99,7 +99,7 @@ export class Controller {
 
         req.session.regenerate(error => {
           if (error) {
-            throw new Error('Failed to regenerate session.')
+            next(error)
           }
         })
 
