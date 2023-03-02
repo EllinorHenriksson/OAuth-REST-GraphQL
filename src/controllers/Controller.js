@@ -43,9 +43,13 @@ export class Controller {
     res.redirect(307, `https://gitlab.lnu.se/oauth/authorize?client_id=${process.env.APP_ID}&redirect_uri=${process.env.CALLBACK}&response_type=code&state=${state}&scope=read_api+openid+profile+email`)
   }
 
-  profile (req, res, next) {
-    // Fetch profile info
-    res.render('profile')
+  async profile (req, res, next) {
+    try {
+      const user = await this.#service.getUserInfo(req.session.accessToken)
+      res.render('profile', { user })
+    } catch (error) {
+      next(error)
+    }
   }
 
   activities (req, res, next) {
@@ -95,7 +99,7 @@ export class Controller {
   async oauthCallback (req, res, next) {
     if (req.query.state === req.session.state) {
       try {
-        const { accessToken, user } = await this.#service.requestAccessToken(req.query.code)
+        const { accessToken, userId } = await this.#service.requestAccessToken(req.query.code)
 
         req.session.regenerate(error => {
           if (error) {
@@ -104,9 +108,9 @@ export class Controller {
         })
 
         req.session.accessToken = accessToken
-        req.session.user = user
+        req.session.user = userId
 
-        res.redirect('/')
+        res.redirect('/profile')
       } catch (error) {
         next(error)
       }

@@ -15,11 +15,11 @@ export class ServiceBase {
   }
 
   /**
-   * Requests an access token from GitLab and returns the token and some user info.
+   * Requests an access token from GitLab.
    *
    * @abstract
    * @param {string} code - The request code.
-   * @returns {object} - An object with properties accessToken (string) and user (object { id (string), email (string), groups (string[])})
+   * @returns {object} - The access token and the user id.
    */
   async requestAccessToken (code) {
     throw new Error('Must be implemented by subclass!')
