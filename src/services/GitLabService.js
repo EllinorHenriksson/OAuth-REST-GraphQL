@@ -55,6 +55,12 @@ export class GitLabService extends ServiceBase {
     return { id, name, username, email, avatar, lastActivityOn }
   }
 
+  /**
+   * Gets the user's activities from GitLab.
+   *
+   * @param {string} accessToken - The access token.
+   * @returns {object[]} The activities ({ actionName: string, createdAt: string, targetTitle: string, targetType: string }).
+   */
   async getActivities (accessToken) {
     // OBS! Fortsätt här med paginering i requesten
     const response = await fetch(`https://gitlab.lnu.se/api/v4/events?access_token=${accessToken}`)
@@ -72,7 +78,7 @@ export class GitLabService extends ServiceBase {
    * Filters the activity data.
    *
    * @param {object[]} data The activities as returned from GitLab.
-   * @returns {object[]} The filtered activities.
+   * @returns {object[]} The filtered activities ({ actionName: string, createdAt: string, targetTitle: string, targetType: string }).
    */
   #filterActivityData (data) {
     const activities = []

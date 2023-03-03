@@ -44,4 +44,14 @@ export class ServiceBase {
   async getUserInfo (accessToken) {
     throw new Error('Must be implemented by subclass!')
   }
+
+  /**
+   * Gets the user's activities from GitLab.
+   *
+   * @param {string} accessToken - The access token.
+   * @returns {object[]} The activities ({ actionName: string, createdAt: string, targetTitle: string, targetType: string }).
+   */
+  async getActivities (accessToken) {
+    throw new Error('Must be implemented by subclass!')
+  }
 }
