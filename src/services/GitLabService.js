@@ -1,7 +1,6 @@
 import { ServiceBase } from './ServiceBase.js'
 import fetch from 'node-fetch'
 import createError from 'http-errors'
-import jwt from 'jsonwebtoken'
 
 /**
  * Represents a GitLabService.
@@ -11,7 +10,7 @@ export class GitLabService extends ServiceBase {
    * Requests an access token from GitLab.
    *
    * @param {string} code - The request code.
-   * @returns {object} - The access token and the user id.
+   * @returns {string} - The access token.
    */
   async requestAccessToken (code) {
     const response = await fetch(`https://gitlab.lnu.se/oauth/token?client_id=${process.env.APP_ID}&client_secret=${process.env.APP_SECRET}&code=${code}&grant_type=authorization_code&redirect_uri=${process.env.CALLBACK}`, { method: 'POST' })
@@ -20,10 +19,9 @@ export class GitLabService extends ServiceBase {
       throw createError(response.status, response.statusText)
     }
 
-    const { access_token: accessToken, id_token: idToken } = await response.json()
-    const payload = jwt.decode(idToken, { json: true })
+    const { access_token: accessToken } = await response.json()
 
-    return { accessToken, userId: payload.sub }
+    return accessToken
   }
 
   /**
@@ -33,24 +31,16 @@ export class GitLabService extends ServiceBase {
    * @returns {object} The user info (id, name, username, email, avatar, lastActivityOn)
    */
   async getUserInfo (accessToken) {
-    const response = await fetch(`https://gitlab.lnu.se/oauth/userinfo?access_token=${accessToken}`)
+    const response = await fetch(`https://gitlab.lnu.se/api/v4/user?access_token=${accessToken}`)
 
     if (!response.ok) {
+      console.log('Response: ', response)
       throw new Error('Failed to fetch user info.')
     }
 
-    const data = await response.json()
+    const { id, name, username, email, avatar_url: avatar, last_activity_on: lastActivityOn } = await response.json()
 
-    // Get last activity on
-
-    return {
-      id: data.sub,
-      name: data.name,
-      username: data.nickname,
-      email: data.email,
-      avatar: data.picture,
-      lastActivityOn: 'date'
-    }
+    return { id, name, username, email, avatar, lastActivityOn }
   }
 
   /**

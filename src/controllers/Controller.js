@@ -46,7 +46,7 @@ export class Controller {
   async profile (req, res, next) {
     try {
       const user = await this.#service.getUserInfo(req.session.accessToken)
-      res.render('profile', { user })
+      res.render('profile', { viewData: user })
     } catch (error) {
       next(error)
     }
@@ -99,7 +99,7 @@ export class Controller {
   async oauthCallback (req, res, next) {
     if (req.query.state === req.session.state) {
       try {
-        const { accessToken, userId } = await this.#service.requestAccessToken(req.query.code)
+        const accessToken = await this.#service.requestAccessToken(req.query.code)
 
         req.session.regenerate(error => {
           if (error) {
@@ -108,7 +108,6 @@ export class Controller {
         })
 
         req.session.accessToken = accessToken
-        req.session.user = userId
 
         res.redirect('/profile')
       } catch (error) {
