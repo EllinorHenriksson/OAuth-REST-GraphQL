@@ -40,7 +40,7 @@ export class Controller {
   login (req, res) {
     const state = randomstring.generate()
     req.session.state = state
-    res.redirect(307, `https://gitlab.lnu.se/oauth/authorize?client_id=${process.env.APP_ID}&redirect_uri=${process.env.CALLBACK}&response_type=code&state=${state}&scope=read_api+openid+profile+email`)
+    res.redirect(307, `https://gitlab.lnu.se/oauth/authorize?client_id=${process.env.APP_ID}&redirect_uri=${process.env.CALLBACK}&response_type=code&state=${state}&scope=read_api+read_user+openid+profile+email`)
   }
 
   async profile (req, res, next) {
