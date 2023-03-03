@@ -52,9 +52,13 @@ export class Controller {
     }
   }
 
-  activities (req, res, next) {
-    // Fetch activities
-    res.render('activities')
+  async activities (req, res, next) {
+    try {
+      const activities = await this.#service.getActivities(req.session.accessToken)
+      res.render('activities', { viewData: activities })
+    } catch (error) {
+      next(error)
+    }
   }
 
   groups (req, res, next) {
@@ -70,23 +74,19 @@ export class Controller {
    * @param {Function} next - Express next middleware function.
    */
   async logout (req, res, next) {
-    if (req.session.accessToken) {
-      try {
-        await this.#service.revokeAccessToken(req.session.accessToken)
-      } catch (error) {
-        next(error)
-      }
-
-      req.session.destroy(error => {
-        if (error) {
-          next(error)
-        }
-      })
-
-      res.redirect('/')
+    try {
+      await this.#service.revokeAccessToken(req.session.accessToken)
+    } catch (error) {
+      next(error)
     }
 
-    next(createError(401))
+    req.session.destroy(error => {
+      if (error) {
+        next(error)
+      }
+    })
+
+    res.redirect('/')
   }
 
   /**

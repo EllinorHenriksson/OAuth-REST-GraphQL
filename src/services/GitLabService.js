@@ -25,25 +25,6 @@ export class GitLabService extends ServiceBase {
   }
 
   /**
-   * Gets the user info.
-   *
-   * @param {string} accessToken - The access token.
-   * @returns {object} The user info (id, name, username, email, avatar, lastActivityOn)
-   */
-  async getUserInfo (accessToken) {
-    const response = await fetch(`https://gitlab.lnu.se/api/v4/user?access_token=${accessToken}`)
-
-    if (!response.ok) {
-      console.log('Response: ', response)
-      throw new Error('Failed to fetch user info.')
-    }
-
-    const { id, name, username, email, avatar_url: avatar, last_activity_on: lastActivityOn } = await response.json()
-
-    return { id, name, username, email, avatar, lastActivityOn }
-  }
-
-  /**
    * Revokes the access token for the GitLab user.
    *
    * @param {string} accessToken - The access token.
@@ -54,5 +35,55 @@ export class GitLabService extends ServiceBase {
     if (response.status !== 200) {
       throw new Error(`Unable to revoke token. Fetch response: ${response.status} ${response.statusText}`)
     }
+  }
+
+  /**
+   * Gets the user info.
+   *
+   * @param {string} accessToken - The access token.
+   * @returns {object} The user info (id, name, username, email, avatar, lastActivityOn)
+   */
+  async getUserInfo (accessToken) {
+    const response = await fetch(`https://gitlab.lnu.se/api/v4/user?access_token=${accessToken}`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch user info.')
+    }
+
+    const { id, name, username, email, avatar_url: avatar, last_activity_on: lastActivityOn } = await response.json()
+
+    return { id, name, username, email, avatar, lastActivityOn }
+  }
+
+  async getActivities (accessToken) {
+    // OBS! Fortsätt här med paginering i requesten
+    const response = await fetch(`https://gitlab.lnu.se/api/v4/events?access_token=${accessToken}`)
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch activities.')
+    }
+
+    const data = await response.json()
+
+    return this.#filterActivityData(data)
+  }
+
+  /**
+   * Filters the activity data.
+   *
+   * @param {object[]} data The activities as returned from GitLab.
+   * @returns {object[]} The filtered activities.
+   */
+  #filterActivityData (data) {
+    const activities = []
+    for (const activity of data) {
+      activities.push({
+        actionName: activity.action_name,
+        createdAt: activity.created_at,
+        targetTitle: activity.target_title,
+        targetType: activity.target_type
+      })
+    }
+    return activities
   }
 }
