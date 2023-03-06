@@ -55,7 +55,7 @@ export class Controller {
   async activities (req, res, next) {
     try {
       const activities = await this.#service.getActivities(req.session.accessToken)
-      res.render('activities', { viewData: activities })
+      res.render('activities', { viewData: { activities } })
     } catch (error) {
       next(error)
     }

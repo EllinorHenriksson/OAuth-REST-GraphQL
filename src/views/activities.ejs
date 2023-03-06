@@ -1,1 +1,8 @@
 <h1>Activities</h1>
+
+<% for (const activity of viewData.activities) { %>
+  <p>Action name: <%= activity.actionName %></p>
+  <p>Created at: <%= activity.createdAt %></p>
+  <p>Target title: <%= activity.targetTitle %></p>
+  <p>Target type: <%= activity.targetType %></p>
+<% } %>

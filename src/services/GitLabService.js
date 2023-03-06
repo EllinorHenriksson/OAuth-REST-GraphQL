@@ -62,16 +62,35 @@ export class GitLabService extends ServiceBase {
    * @returns {object[]} The activities ({ actionName: string, createdAt: string, targetTitle: string, targetType: string }).
    */
   async getActivities (accessToken) {
-    // OBS! Fortsätt här med paginering i requesten
-    const response = await fetch(`https://gitlab.lnu.se/api/v4/events?access_token=${accessToken}`)
+    const { activities, nextPage } = await this.#fetchActivities(`https://gitlab.lnu.se/api/v4/events?per_page=100&access_token=${accessToken}`)
+
+    if (nextPage) {
+      const { activities: allActivities } = await this.#fetchActivities(`https://gitlab.lnu.se/api/v4/events?page=2&per_page=1&access_token=${accessToken}`, activities)
+
+      return this.#filterActivityData(allActivities)
+    }
+
+    return this.#filterActivityData(activities)
+  }
+
+  /**
+   * Fetches activities from GitLab.
+   *
+   * @param {string} url - The URL to fetch from.
+   * @param {object[]} activities - Previously fetched activities (optional).
+   * @returns {object[]} All fetched activities.
+   */
+  async #fetchActivities (url, activities = []) {
+    const response = await fetch(url)
 
     if (!response.ok) {
       throw new Error('Failed to fetch activities.')
     }
 
+    const nextPage = response.headers.get('x-next-page')
     const data = await response.json()
-
-    return this.#filterActivityData(data)
+    activities = [...activities, ...data]
+    return { activities, nextPage }
   }
 
   /**
