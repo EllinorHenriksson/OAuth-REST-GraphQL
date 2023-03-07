@@ -8,7 +8,7 @@ body {
 }
 
 main {
-  padding: 1rem;
+  padding: 2rem;
 }
 
 h1 {
@@ -43,24 +43,7 @@ nav a {
 }
 
 nav a:hover, nav a:active {
-  color: yellow;
-}
-
-/* Styling for index page */
-.button {
-  font-size: 0.9rem;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #b54fa4;
-  color: #ffffff;
-  cursor: pointer;
-  text-decoration: none;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.button:hover, .button:active {
-  color: yellow;
+  color: rgb(249, 249, 133);
 }
 
 /* Styling for profile page */
@@ -70,7 +53,8 @@ nav a:hover, nav a:active {
 }
 
 #profile {
-  max-width: 200px;
+  max-width: 150px;
+  border-radius: 50%;
 }
 
 /* Styling for activities page */
@@ -83,7 +67,6 @@ caption {
 
 table {
   border-collapse: collapse;
-  border-top: 2px solid #b54fa4;
   border-bottom: 2px solid #b54fa4;
   width: 100%;
   margin-top: 1rem;
@@ -91,20 +74,21 @@ table {
 }
 
 th {
-  background-color: #b54fa4;
-  color: #ffffff;
-  padding: 10px;
+  color: #b54fa4;
+  padding: 5px;
+  border-bottom: 2px solid #b54fa4;
+  text-align: left;
+}
+
+#target-title {
+  width: 40%;
 }
 
 tr:nth-child(even) {
-  background-color:#e3c7df
+  background-color:#efdfed
 }
 
 td {
   padding: 10px;
   overflow: auto;
-}
-
-.action-name, .created-at, .target-title, .target-type {
-  text-align: center;
 }

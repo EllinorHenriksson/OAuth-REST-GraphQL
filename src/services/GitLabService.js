@@ -108,7 +108,7 @@ export class GitLabService extends ServiceBase {
     for (const activity of data) {
       activities.push({
         actionName: activity.action_name,
-        createdAt: activity.created_at,
+        createdAt: new Date(activity.created_at).toLocaleString(),
         targetTitle: activity.target_title,
         targetType: activity.target_type
       })
