@@ -111,4 +111,76 @@ export class GitLabService extends ServiceBase {
     }
     return activities
   }
+
+  /**
+   * Fetches the users groups, projects and subgroups from GitLab's GraphQL API.
+   *
+   * @throws {Error} If the request fails.
+   * @param {string} accessToken The user's access token.
+   * @returns {object} The user's groups.
+   */
+  async getGroups (accessToken) {
+    const query = `{
+      currentUser {
+        groups(first: 3) {
+          nodes {
+            name
+            webUrl
+            avatarUrl
+            fullPath
+            descendantGroups {
+              nodes {
+                name
+                webUrl
+                avatarUrl
+                fullPath
+              }
+            }
+            projects(first: 5) {
+              nodes {
+                name
+                webUrl
+                avatarUrl
+                fullPath
+                repository {
+                  tree {
+                    lastCommit {
+                      authoredDate
+                      author {
+                        name
+                        username
+                        avatarUrl
+                      }
+                    }
+                  }
+                }
+              }
+              pageInfo {
+                hasNextPage
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+          }
+        }
+      }
+    }`
+
+    const response = await fetch('https://gitlab.lnu.se/api/graphql', {
+      method: 'POST',
+      body: JSON.stringify({ query }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch groups.')
+    }
+
+    const { data } = await response.json()
+    return data.currentUser.groups
+  }
 }
