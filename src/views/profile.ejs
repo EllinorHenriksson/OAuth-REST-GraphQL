@@ -1,8 +1,7 @@
 <h1>Profile</h1>
-
-<p>ID: <%= viewData.user.id %></p>
-<p>Name: <%= viewData.user.name %></p>
-<p>Username: <%= viewData.user.username %></p>
-<p>Email: <%= viewData.user.email %></p>
-<img src="<%= viewData.user.avatar %>" alt="Avatar"></img>
-<p>Last activity on: <%= viewData.user.lastActivityOn %></p>
+<img src="<%= viewData.user.avatar %>" alt="Avatar" id="profile"></img>
+<p><span class="title">ID:</span> <%= viewData.user.id %></p>
+<p><span class="title">Name:</span> <%= viewData.user.name %></p>
+<p><span class="title">Username:</span> <%= viewData.user.username %></p>
+<p><span class="title">Email:</span> <%= viewData.user.email %></p>
+<p><span class="title">Last activity on:</span> <%= viewData.user.lastActivityOn %></p>
