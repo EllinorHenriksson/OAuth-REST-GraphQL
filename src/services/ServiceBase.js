@@ -38,6 +38,7 @@ export class ServiceBase {
   /**
    * Gets the user info.
    *
+   * @abstract
    * @param {string} accessToken - The access token.
    * @returns {object} The user info (id, name, username, email, avatar, lastActivityOn)
    */
@@ -48,10 +49,22 @@ export class ServiceBase {
   /**
    * Gets the user's activities from GitLab.
    *
+   * @abstract
    * @param {string} accessToken - The access token.
    * @returns {object[]} The activities ({ actionName: string, createdAt: string, targetTitle: string, targetType: string }).
    */
   async getActivities (accessToken) {
+    throw new Error('Must be implemented by subclass!')
+  }
+
+  /**
+   * Fetches the users groups, projects and subgroups from GitLab's GraphQL API.
+   *
+   * @abstract
+   * @param {string} accessToken The user's access token.
+   * @returns {object} The user's groups.
+   */
+  async getGroups (accessToken) {
     throw new Error('Must be implemented by subclass!')
   }
 }

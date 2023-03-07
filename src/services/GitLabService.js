@@ -9,6 +9,7 @@ export class GitLabService extends ServiceBase {
   /**
    * Requests an access token from GitLab.
    *
+   * @throws {Error} Throws an exception if the request fails.
    * @param {string} code - The request code.
    * @returns {string} - The access token.
    */
@@ -27,6 +28,7 @@ export class GitLabService extends ServiceBase {
   /**
    * Revokes the access token for the GitLab user.
    *
+   * @throws {Error} Throws an exception if the request fails.
    * @param {string} accessToken - The access token.
    */
   async revokeAccessToken (accessToken) {
@@ -40,6 +42,7 @@ export class GitLabService extends ServiceBase {
   /**
    * Gets the user info.
    *
+   * @throws {Error} Throws an exception if the request fails.
    * @param {string} accessToken - The access token.
    * @returns {object} The user info (id, name, username, email, avatar, lastActivityOn)
    */
@@ -76,6 +79,7 @@ export class GitLabService extends ServiceBase {
   /**
    * Fetches activities from GitLab.
    *
+   * @throws {Error} Throws an exception if the request fails.
    * @param {string} url - The URL to fetch from.
    * @param {object[]} activities - Previously fetched activities (optional).
    * @returns {object[]} All fetched activities.
@@ -115,7 +119,7 @@ export class GitLabService extends ServiceBase {
   /**
    * Fetches the users groups, projects and subgroups from GitLab's GraphQL API.
    *
-   * @throws {Error} If the request fails.
+   * @throws {Error} Throws an exception if the request fails.
    * @param {string} accessToken The user's access token.
    * @returns {object} The user's groups.
    */
