@@ -1,8 +1,23 @@
 <h1>Activities</h1>
 
-<% for (const activity of viewData.activities) { %>
-  <p>Action name: <%= activity.actionName %></p>
-  <p>Created at: <%= activity.createdAt %></p>
-  <p>Target title: <%= activity.targetTitle %></p>
-  <p>Target type: <%= activity.targetType %></p>
-<% } %>
+<table>
+  <caption>101 latest GitLab activities</caption>
+  <thead>
+    <tr>
+      <th scope="col" id="action-name">Action name</th>
+      <th scope="col" id="created-at">Created at</th>
+      <th scope="col" id="target-title">Target title</th>
+      <th scope="col" id="target-type">Target type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (const activity of viewData.activities) { %>
+      <tr>
+        <td class="action-name"><%= activity.actionName %></td>
+        <td class="created-at"><%= activity.createdAt %></td>
+        <td class="target-title"><%= activity.targetTitle %></td>
+        <td class="target-type"><%= activity.targetType %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

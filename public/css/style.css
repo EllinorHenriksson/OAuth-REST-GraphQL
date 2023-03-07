@@ -72,3 +72,39 @@ nav a:hover, nav a:active {
 #profile {
   max-width: 200px;
 }
+
+/* Styling for activities page */
+caption {
+  caption-side: bottom;
+  text-align: left;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  border-top: 2px solid #b54fa4;
+  border-bottom: 2px solid #b54fa4;
+  width: 100%;
+  margin-top: 1rem;
+  table-layout: fixed;
+}
+
+th {
+  background-color: #b54fa4;
+  color: #ffffff;
+  padding: 10px;
+}
+
+tr:nth-child(even) {
+  background-color:#e3c7df
+}
+
+td {
+  padding: 10px;
+  overflow: auto;
+}
+
+.action-name, .created-at, .target-title, .target-type {
+  text-align: center;
+}
