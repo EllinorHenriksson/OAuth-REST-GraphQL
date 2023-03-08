@@ -3,19 +3,36 @@
  */
 
 import { IoCContainer } from '../util/IoCContainer.js'
-import { Controller } from '../controllers/Controller.js'
-import { GitLabService } from '../services/GitLabService.js'
+import { AuthService } from '../services/AuthService.js'
+import { ResourceService } from '../services/ResourceService.js'
+import { AuthController } from '../controllers/AuthController.js'
+import { ResourceController } from '../controllers/ResourceController.js'
+import { AuthHelper } from '../util/AuthHelper.js'
 
 const iocContainer = new IoCContainer()
 
-iocContainer.register('GitLabServiceSingleton', GitLabService, {
+iocContainer.register('AuthServiceSingleton', AuthService, {
   singleton: true
 })
 
-iocContainer.register('Controller', Controller, {
+iocContainer.register('ResourceServiceSingleton', ResourceService, {
+  singleton: true
+})
+
+iocContainer.register('AuthController', AuthController, {
   dependencies: [
-    'GitLabServiceSingleton'
+    'AuthServiceSingleton'
   ]
+})
+
+iocContainer.register('ResourceController', ResourceController, {
+  dependencies: [
+    'ResourceServiceSingleton'
+  ]
+})
+
+iocContainer.register('AuthHelperSingleton', AuthHelper, {
+  singleton: true
 })
 
 export const container = Object.freeze(iocContainer)
