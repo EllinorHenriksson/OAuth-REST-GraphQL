@@ -52,7 +52,7 @@ export class AuthController {
       }
     })
 
-    res.redirect('/')
+    res.redirect('..')
   }
 
   /**
@@ -75,7 +75,7 @@ export class AuthController {
 
         req.session.accessToken = accessToken
 
-        res.redirect('/profile')
+        res.redirect('../profile')
       } catch (error) {
         next(error)
       }
