@@ -1,0 +1,164 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+main {
+  padding: 2rem;
+}
+
+h1, h2 {
+  color: #373737;
+}
+
+/* Styling for navigation */
+nav div {
+  background-color: #5b5b5b;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  padding: 1rem;
+  padding-left: 0;
+  margin: 0;
+}
+
+nav li {
+  padding: 0.5em;
+  font-size: 1.2rem;
+}
+
+nav li:first-child {
+  font-weight: bold;
+} 
+
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+nav a:hover, nav a:active {
+  color: #b54fa4;
+}
+
+/* Styling for profile page */
+.title {
+  font-weight: bold;
+  color: #373737;
+}
+
+#profile {
+  max-width: 150px;
+  border-radius: 50%;
+}
+
+/* Styling for activities page */
+caption {
+  caption-side: bottom;
+  text-align: left;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  border-bottom: 2px solid #b54fa4;
+  width: 100%;
+  margin-top: 1rem;
+  table-layout: fixed;
+}
+
+th {
+  color: #b54fa4;
+  padding: 5px;
+  border-bottom: 2px solid #b54fa4;
+  text-align: left;
+}
+
+#target-title {
+  width: 40%;
+}
+
+tr:nth-child(even) {
+  background-color:#efdfed
+}
+
+td {
+  padding: 10px;
+  overflow: auto;
+}
+
+/* Styling for groups page */
+.group-container {
+  width: 100%;
+  border: 2px solid #b54fa4;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.project-container, .subgroup-container {
+  background-color: #efdfed;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  max-width: 100%;
+  font-size: 0.9rem;
+}
+
+.group-container h2 {
+  font-size: 1.1em;
+}
+
+.group-container img {
+  max-width: 50px;
+  height: fit-content;
+  border-radius: 50%;
+}
+
+.default-group-avatar, .default-project-avatar, .default-author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #b54fa4;
+}
+
+.default-project-avatar {
+  background-color: rgb(254, 254, 84);
+}
+
+.default-author-avatar {
+  background-color: rgb(59, 212, 59);
+}
+
+.commit-container {
+  margin-left: auto;
+}
+
+.commit-title {
+  justify-content: center;
+  border-bottom: 1px solid #b54fa4;
+}
+
+.group-container a {
+  color: #000000;
+}
+
+.group-container a:hover, .group-container a:active {
+  color: #b54fa4;
+}
+
+.normal-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.small {
+  font-size: 0.9rem;
+} 

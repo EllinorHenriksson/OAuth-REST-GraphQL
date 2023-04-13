@@ -1,0 +1,72 @@
+<h1>Groups</h1>
+
+<% for (const group of viewData.groups.nodes) { %>
+  <div class="group-container">
+    <div class="group-info normal-flex">
+      <% if (group.avatarUrl) { %>
+        <img src="<%= group.avatarUrl %>" alt="Group avatar"></img>
+      <% } else { %>
+        <div class="default-group-avatar"></div>
+      <% } %>
+      <div class="info-container">
+        <a href="<%= group.webUrl %>"><%= group.name %></a>
+        <p><%= group.fullPath %></p>
+      </div>
+    </div>
+    <% if (group.projects?.nodes?.length > 0) { %>
+      <h2>Projects</h2>
+    <% } %>
+    <% for (const project of group.projects.nodes) { %>
+      <div class="project-container normal-flex">
+        <% if (project.avatarUrl) { %>
+          <img src="<%= project.avatarUrl %>" alt="Project avatar"></img>
+        <% } else { %>
+          <div class="default-project-avatar"></div>
+        <% } %>
+        <div class="info-container">
+          <a href="<%= project.webUrl %>"><%= project.name %></a>
+          <p><%= project.fullPath %></p>
+        </div>
+        <div class="commit-container">
+          <div class="commit-title title">Last commit</div>
+          <div class="commit-data normal-flex">
+            <div><%= new Date(project.repository.tree.lastCommit.authoredDate).toLocaleString() %></div>
+            <figure class="normal-flex">
+              <% if (project.repository.tree.lastCommit.author.avatarUrl) { %>
+                <img src="https://gitlab.lnu.se<%= project.repository.tree.lastCommit.author.avatarUrl %>" alt="Author avatar"></img>
+              <% } else { %>
+                <div class="default-author-avatar"></div>
+              <% } %>
+              <figcaption title="<%= project.repository.tree.lastCommit.author.name %>"><%= project.repository.tree.lastCommit.author.username %></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+    <% if (group.projects?.pageInfo?.hasNextPage) { %>
+      <p class="small">There are more projects on GitLab</p>
+    <% } %>
+
+    <% if (group.descendantGroups?.nodes?.length > 0) { %>
+      <h2>Subgroups</h2>
+    <% } %>
+    <% for (const subgroup of group.descendantGroups?.nodes) { %>
+      <div class="subgroup-container normal-flex">
+        <% if (subgroup.avatarUrl) { %>
+          <img src="<%= subgroup.avatarUrl %>" alt="Group avatar"></img>
+        <% } else { %>
+          <div class="default-group-avatar"></div>
+        <% } %>
+        <div class="info-container">
+          <a href="<%= subgroup.webUrl %>"><%= subgroup.name %></a>
+          <p><%= subgroup.fullPath %></p>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<% } %>
+
+<% if (viewData.groups?.pageInfo?.hasNextPage) { %>
+  <p class="small">There are more groups on GitLab</p>
+<% } %>

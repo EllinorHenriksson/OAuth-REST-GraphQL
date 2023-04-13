@@ -1,0 +1,9 @@
+<h1>Profile</h1>
+<% if (viewData.user.avatar) { %>
+  <img src="<%= viewData.user.avatar %>" alt="Avatar" id="profile"></img>
+<% } %>
+<p><span class="title">ID</span><br><%= viewData.user.id %></p>
+<p><span class="title">Name</span><br><%= viewData.user.name %></p>
+<p><span class="title">Username</span><br><%= viewData.user.username %></p>
+<p><span class="title">Email</span><br> <%= viewData.user.email %></p>
+<p><span class="title">Last activity on</span><br><%= viewData.user.lastActivityOn %></p>
